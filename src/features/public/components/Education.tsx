@@ -1,59 +1,51 @@
-import Experience from "./Experience";
+import ScrollReveal from "@/components/shared/ScrollReveal";
 
 const education = [
   {
-    title:
-      "Licence en Génie Logiciel et Systèmes d'Information – IAI TOGO, Lomé",
+    title: "Licence en Génie Logiciel et Systèmes d'Information – IAI TOGO, Lomé",
     period: "2025",
     description:
-      "Passionné par les solutions numériques et les systèmes d'information, avec l'ambition de consolider mes acquis et de poursuivre mes études.",
+      "Formation orientée solutions numériques, architecture logicielle et gestion de systèmes d'information, avec une forte appétence pour les projets concrets et évolutifs.",
   },
   {
     title: "Bac S – Collège Père Augustin Planque",
     period: "2020",
-    description: "Option Sciences et Mathématiques.",
+    description: "Option Sciences et Mathématiques, avec un intérêt marqué pour les systèmes, l'analyse et la logique.",
   },
 ];
 
-
 export default function Education() {
   return (
-    <section
-      id="parcours"
-      className="pt-20 bg-linear-to-b from-white via-neutral-50 to-white px-6 py-10 dark:from-neutral-800 dark:via-black dark:to-black sm:px-10"
-    >
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="border border-cyan-500/20  rounded-2xl px-6 py-8 shadow-md shadow-black/10 sm:px-10">
-          <div className="space-y-4">
-            <p className="text-sm uppercase tracking-[0.2em] text-cyan-600 font-semibold dark:text-cyan-400">
-              Education
+    <section id="parcours" className="py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ScrollReveal className="rounded-[1.75rem] border border-border bg-card px-6 py-8 shadow-[0_18px_40px_rgba(15,23,42,0.04)] sm:px-8">
+          <div className="space-y-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              Éducation
             </p>
-            <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl dark:text-white">
+            <h2 className="text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-4xl">
               Parcours académique
             </h2>
-            <div className="space-y-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {education.map((item, index) => (
-                <div
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {education.map((item) => (
+                <article
                   key={item.title}
-                  className="group relative rounded-xl border border-cyan-500/30 bg-white px-4 py-4 shadow-lg transition-all duration-300 hover:border-cyan-500/60 hover:shadow-cyan-500/10 hover:-translate-y-1 dark:bg-neutral-800/50"
+                  className="group relative rounded-[1.25rem] border border-border bg-background p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30"
                 >
-                  <div className="absolute -left-3 top-6 h-3 w-3 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/50 ring-4 ring-white dark:ring-neutral-900" />
+                  <div className="absolute -left-2 top-6 h-3 w-3 rounded-full bg-primary shadow-[0_0_0_4px_rgba(255,255,255,0.9)]" />
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-lg font-bold text-neutral-900 group-hover:text-cyan-600 transition-colors duration-200 dark:text-white dark:group-hover:text-cyan-400">
-                      {item.title}
-                    </h3>
-                    <span className="text-sm font-semibold text-cyan-600 whitespace-nowrap dark:text-cyan-400">
+                    <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
+                    <span className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                       {item.period}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-neutral-600 leading-relaxed dark:text-neutral-300">
-                    {item.description}
-                  </p>
-                </div>
+                  <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.description}</p>
+                </article>
               ))}
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

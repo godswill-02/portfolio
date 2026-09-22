@@ -1,69 +1,62 @@
 import ContactMeForm from "../forms/ContactMeForm";
+import ScrollReveal from "@/components/shared/ScrollReveal";
 
 export default function ContactMe() {
-
   return (
-    <section
-      id="contact"
-      className="py-20 bg-white text-foreground dark:bg-black dark:text-white"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid gap-6 rounded-2xl border border-neutral-200 bg-neutral-50 px-6 py-8 shadow-sm dark:border-white/15 dark:bg-neutral-900 lg:grid-cols-2 sm:px-10">
-          <div className="space-y-4">
-            <p className="text-sm uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-300">
+    <section id="contact" className="py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ScrollReveal className="grid gap-6 rounded-[1.75rem] border border-border bg-card px-6 py-8 shadow-[0_18px_40px_rgba(15,23,42,0.04)] sm:px-8 lg:grid-cols-2">
+          <div className="space-y-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               Services
             </p>
-            <h2 className="text-3xl font-semibold text-foreground dark:text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-4xl">
               Ce que je propose
             </h2>
+
             <div className="grid gap-4 sm:grid-cols-2">
               {[
                 {
                   title: "Applications fluides",
                   description:
-                    "Interfaces intuitives et user‑friendly pour une expérience sans friction.",
+                    "Interfaces intuitives, lisibles et pensées pour une expérience sans friction.",
                 },
                 {
                   title: "Backend robuste",
                   description:
-                    "Architecture sécurisée et fiable pour protéger les données des utilisateurs.",
+                    "Architecture fiable, sécurisée et pensée pour évoluer avec le produit.",
                 },
                 {
                   title: "Intégration limpide",
                   description:
-                    "Intégrations simples et propres pour relier vos services sans complexité.",
+                    "Connexion claire entre services, outils et utilisateurs sans complexité inutile.",
                 },
               ].map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-lg border border-neutral-200 bg-white px-4 py-5 dark:border-white/10 dark:bg-neutral-800/80"
+                  className="rounded-[1.25rem] border border-border bg-background px-4 py-5 shadow-sm"
                 >
-                  <h3 className="text-lg font-semibold text-foreground dark:text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                    {item.description}
-                  </p>
+                  <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">{item.description}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="space-y-4 rounded-xl border border-neutral-200 bg-white px-5 py-6 shadow-sm dark:border-white/10 dark:bg-neutral-800/90">
+          <div className="space-y-4 rounded-[1.5rem] border border-border bg-background px-5 py-6 shadow-sm">
             <div className="space-y-1">
-              <p className="text-sm uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-300">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
                 Contact
               </p>
-              <h3 className="text-xl font-semibold text-foreground dark:text-white">
-                Parlez-moi de votre projet
-              </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              <h3 className="text-2xl font-bold text-foreground">Parlez-moi de votre projet</h3>
+              <p className="text-sm leading-7 text-muted-foreground">
                 Laissez votre email et un résumé, je reviens vers vous sous 24h.
               </p>
             </div>
-           <ContactMeForm />
+
+            <ContactMeForm />
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

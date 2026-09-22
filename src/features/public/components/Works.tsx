@@ -1,122 +1,157 @@
 import Image from "next/image";
-import { Button } from "../../../components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../../../components/ui/carousel";
+import { Button } from "@/components/ui/button";
+import ScrollReveal from "@/components/shared/ScrollReveal";
 
 export default function Works() {
-  const featuredProjects = [
+  const professionalProjects = [
     {
-      title: "Assistant Médical Personnalisé - SUNU SANTE",
+      title: "Assistant Médical Personnalisé",
+      client: "Sunu Santé",
+      category: "Produit SaaS • Assurance santé",
       image: "/amp-images/medecin-controlleur-dash.png",
       description:
-        "L'assistant médical personnalisé (AMP) est une solution qui permet de mettre en relation les assurés avec des prestataires de soins partenanire de Sunu Santé.",
+        "Plateforme pensée pour rapprocher assurés et prestataires de santé, en améliorant la compréhension du parcours de soins et la fluidité de l’expérience utilisateur.",
+      stack: ["Java", "Spring Boot", "React", "PostgreSQL"],
+      impact: "Contribue à une meilleure prise en charge grâce à un parcours plus clair et plus accessible.",
+      link: "https://demo-amp-sunu.example.com",
+      cta: "Voir le projet",
     },
     {
-      title: "Mon Portfolio",
+      title: "Perfect Vision",
+      client: "Entreprise de services",
+      category: "Solution métier • Gestion de processus",
       image: "/portfolio-images/portfolio-1.png",
       description:
-        "Alors mon portfolio est l'un de mes projets préféré parce que ça me permet de me vendre d'une façon unique. J'ai aussi une partie admin pour mon portofolio qui me permettra plus tard de gérer les différents projets(ajout, suppression, etc...), les contacts et peut-être un blog personnalisé.",
+        "Maintenance et évolution d’une solution métier dédiée à la gestion des processus internes, avec des améliorations fonctionnelles et une meilleure stabilité de l’application.",
+      stack: ["Java", "Spring Boot", "Apache Wicket", "Windows/Linux"],
+      impact: "Amélioration de la fiabilité produit et de la capacité de mise en service sur plusieurs environnements.",
+      link: "https://demo-perfect-vision.example.com",
+      cta: "Voir le projet",
     },
-    // {
-    //   title: "Portraits en lumière douce",
-    //   image: "/logo.png",
-    //   description:
-    //     "Portraits contrastés mais élégants, travaillés pour rester intemporels.",
-    // },
   ];
-  function getProjectsDisplayStyle() {
-    if (featuredProjects.length === 1) {
-      return "md:basis-1/1 lg:basis-1/1";
-    } else if (featuredProjects.length === 2) {
-      return "md:basis-1/2 lg:basis-1/2";
-    } else {
-      return "md:basis-1/3 lg:basis-1/4";
-    }
-  }
-  return (
-    <section
-      id="travaux"
-      className="space-y-6 py-20 bg-linear-to-b from-white via-neutral-50 to-white dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950"
-    >
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between gap-4 mb-10">
+
+  const personalProjects = [
+    {
+      title: "Portfolio personnel",
+      client: "Projet personnel",
+      category: "Portfolio • Design system",
+      image: "/portfolio-images/portfolio-1.png",
+      description:
+        "Portfolio conçu comme une vitrine professionnelle moderne, avec une identité visuelle premium, des sections de preuve et une expérience claire pour les recruteurs.",
+      stack: ["Next.js", "TypeScript", "Tailwind", "UI/UX"],
+      impact: "Renforce la présence professionnelle et la qualité de la première impression.",
+      link: "https://demo-portfolio-personnel.example.com",
+      cta: "Voir le projet",
+    },
+    {
+      title: "Gym Management App",
+      client: "Projet académique",
+      category: "Application web • Gestion",
+      image: "/amp-images/medecin-controlleur-dash.png",
+      description:
+        "Application de gestion de salle de sport avec gestion des abonnements, clients, paiements et sécurité JWT, pensée pour un usage réel et scalable.",
+      stack: ["Angular", "Spring Boot", "JWT", "MySQL"],
+      impact: "Démonstration d’une architecture full-stack claire et sécurisée.",
+      link: "https://demo-gym-management.example.com",
+      cta: "Voir le projet",
+    },
+  ];
+
+  const renderProjectCard = (project: (typeof professionalProjects)[number]) => (
+    <ScrollReveal key={project.title} delay={project.title === "Perfect Vision" ? 120 : 0}>
+      <article className="group flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-border bg-card shadow-[0_18px_40px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
+      <div className="relative h-60 overflow-hidden bg-muted">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent" />
+        <span className="absolute left-4 top-4 rounded-full border border-border bg-background/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground backdrop-blur-sm">
+          {project.category}
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-4 p-5">
+        <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-sm uppercase tracking-[0.2em] text-cyan-600 font-semibold dark:text-cyan-400">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+              {project.client}
+            </p>
+            <h3 className="mt-2 text-xl font-bold text-foreground">{project.title}</h3>
+          </div>
+        </div>
+
+        <p className="text-sm leading-7 text-muted-foreground">{project.description}</p>
+
+        <div className="flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full border border-border bg-muted px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-auto border-t border-border pt-4">
+          <p className="text-sm leading-6 text-muted-foreground">{project.impact}</p>
+          <Button asChild className="mt-4 w-full rounded-full">
+            <a href={project.link} target="_blank" rel="noreferrer noopener">
+              {project.cta}
+            </a>
+          </Button>
+        </div>
+      </div>
+      </article>
+    </ScrollReveal>
+  );
+
+  return (
+    <section id="travaux" className="py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 flex items-center justify-between gap-4">
+          <ScrollReveal>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
               Mes travaux
             </p>
-          </div>
-          <Button
-            variant="outline"
-            asChild
-            className="hidden sm:inline-flex border-cyan-500/50 text-cyan-700 hover:bg-cyan-50 hover:border-cyan-400 transition-all duration-200 dark:text-cyan-500"
-          >
+            <h2 className="mt-3 text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-4xl">
+              Projets à fort impact
+            </h2>
+          </ScrollReveal>
+          <Button variant="outline" asChild className="hidden rounded-full sm:inline-flex">
             <a href="#contact">Discuter d&apos;un projet</a>
           </Button>
         </div>
 
-        <Carousel opts={{ align: "start" }} className="w-full">
-          <CarouselContent>
-            {featuredProjects.map((project) => (
-              <CarouselItem
-                key={project.title}
-                className={getProjectsDisplayStyle()}
-              >
-                  <article className="border border-cyan-500/20 bg-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-500/50 dark:bg-neutral-900/50 dark:shadow-black/50 rounded-xl overflow-hidden">
-                    <div className="relative h-60 overflow-hidden bg-neutral-200 dark:bg-neutral-800">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                        className="object-cover transition-all duration-500 hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-linear-to-t from-neutral-900/70 via-transparent to-transparent opacity-60 transition-opacity duration-300 dark:from-neutral-900" />
-                    </div>
-                    <div className="flex flex-1 flex-col gap-3 px-5 py-5">
-                      <h3 className="text-lg font-bold text-neutral-900 dark:text-white">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-neutral-600 leading-relaxed dark:text-neutral-400">
-                        {project.description}
-                      </p>
-                      {/* <div className="mt-auto flex items-center justify-between text-sm text-neutral-500 dark:text-neutral-500">
-                        <span className="transition-colors duration-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
-                          Prêt pour étude de cas
-                        </span>
-                        <span className="h-2 w-2 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/50 animate-pulse" />
-                      </div> */}
-                      <div className="pt-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="w-full border-cyan-500/60 text-cyan-700 hover:bg-cyan-50 hover:border-cyan-500 dark:text-cyan-400"
-                        >
-                          Voir détails
-                        </Button>
-                      </div>
-                    </div>
-                  </article>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="flex items-center gap-2">
-            <CarouselPrevious className="border-cyan-500/40 text-cyan-700 hover:bg-cyan-50 dark:text-cyan-400" />
-            <CarouselNext className="border-cyan-500/40 text-cyan-700 hover:bg-cyan-50 dark:text-cyan-400" />
+        <div className="space-y-12">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                Projets professionnels
+              </p>
+            </div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {professionalProjects.map(renderProjectCard)}
+            </div>
           </div>
-          {/* <div className="mt-4 flex items-center justify-center gap-4 px-2">
-            <Button>
-              <div className="flex items-center justify-center gap-2">
-                <p>Voir plus</p>
-                <ChevronRight />
-              </div>
-            </Button>
-          </div> */}
-        </Carousel>
+
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400">
+                Projets personnels
+              </p>
+            </div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {personalProjects.map(renderProjectCard)}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

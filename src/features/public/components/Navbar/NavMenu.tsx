@@ -8,7 +8,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const navLinks: { label: string; href: string }[] = [
   { href: "#hero", label: "Accueil" },
-  { href: "#travaux", label: "Travaux" },
+  { href: "#travaux", label: "Projets" },
+  { href: "#experience", label: "Expériences" },
   { href: "#parcours", label: "Parcours" },
   { href: "#competences", label: "Compétences" },
 ];

@@ -8,7 +8,6 @@ import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import EmailService from "../services/EmailService";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 
 export default function ContactMeForm() {
@@ -32,11 +31,7 @@ export default function ContactMeForm() {
       reset();
       toast.success("Email envoyé avec succès");
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        toast.error("Erreur lors de l'envoi de l'email");
-      } else {
-        toast.error("Une erreur est survenue lors de l'envoi de l'email");
-      }
+      toast.error(EmailService.getErrorMessage(error));
       console.error("error", error);
     } finally {
       setIsLoading(false);
@@ -67,8 +62,16 @@ export default function ContactMeForm() {
             id="email"
             type="email"
             placeholder="vous@entreprise.com"
+            aria-label="Votre adresse email"
+            autoComplete="email"
             disabled={isLoading}
-            {...register("email", { required: "L'email est requis" })}
+            {...register("email", {
+              required: "Votre adresse email est requise pour pouvoir vous répondre",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Veuillez saisir une adresse email valide",
+              },
+            })}
             className="input rounded-md w-full sm:col-span-1 dark:text-white transition-colors dark:bg-black/30 placeholder:text-muted-foreground"
           />
           {errors.email && (
@@ -129,7 +132,7 @@ export default function ContactMeForm() {
 
       <div className="mt-4 flex flex-col gap-3">
         <span className="text-xs text-neutral-600 dark:text-neutral-300">
-          Ou écrivez-moi directement :{" "}
+          Votre adresse email est utilisée uniquement pour vous répondre. Ou écrivez-moi directement :{" "}
           <a
             className="underline decoration-neutral-400 underline-offset-4 dark:decoration-white/40"
             href="mailto:godswilllek02@gmail.com"

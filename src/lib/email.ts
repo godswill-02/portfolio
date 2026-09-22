@@ -1,22 +1,6 @@
-import nodemailer from "nodemailer";
 import { render } from "@react-email/render";
 import React from "react";
-
-import dotenv from "dotenv";
-
-dotenv.config();
-
-// Configuration du transporteur Nodemailer avec Gmail
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
+import { Resend } from "resend";
 
 /**
  * Envoie un email avec un composant React
@@ -31,28 +15,39 @@ export async function sendEmail(
   subject: string,
   reactComponent: React.ReactElement,
 ) {
-  try {
-    // Convertir le composant React en HTML
-    const html = await render(reactComponent);
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
-    // Préparer le message
-    const message = {
-      from: `"${senderName}" <${senderEmail}>`,
-      to: process.env.ADMIN_EMAIL,
-      replyTo: senderEmail,
-      subject,
-      html,
-      headers: {
-        "X-Entity-Ref-ID": "tradesphere-email",
-      },
-    };
-
-    // Envoyer l'email
-    const info = await transporter.sendMail(message);
-
-    // console.log("Email envoyé avec succès:", info.messageId);
-    return { success: true, messageId: info.messageId };
-  } catch (error) {
-    throw error;
+  if (!resendApiKey || !adminEmail) {
+    throw new Error(
+      "Configuration email incomplète : RESEND_API_KEY et ADMIN_EMAIL sont requis.",
+    );
   }
+
+  if (!resendApiKey.startsWith("re_") || resendApiKey.includes("xxxxxxxx")) {
+    throw new Error(
+      "RESEND_API_KEY est absente ou contient encore la valeur d'exemple. Ajoutez votre vraie clé dans .env.local.",
+    );
+  }
+
+  const html = await render(reactComponent);
+  const resend = new Resend(resendApiKey);
+  const { data, error } = await resend.emails.send({
+    from: `Portfolio <${fromEmail}>`,
+    to: [adminEmail],
+    replyTo: `${senderName} <${senderEmail}>`,
+    subject,
+    html,
+    text: `Message de ${senderName} (${senderEmail})${subject ? ` - ${subject}` : ""}\n\n${html ? "Consultez la version HTML de cet email." : ""}`,
+    headers: {
+      "X-Entity-Ref-ID": "portfolio-contact-email",
+    },
+  });
+
+  if (error) {
+    throw new Error(`Resend : ${error.message}`);
+  }
+
+  return { success: true, messageId: data?.id };
 }
